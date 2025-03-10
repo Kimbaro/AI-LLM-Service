@@ -34,6 +34,7 @@ POST http://localhost:8080/api/v1/gemini/question
 Content-Type: application/json
 
 {
+  "model": "gemini-2.0-flash",
   "key": "AIzaSyCeX0mF6xl2SZHreHDL84LBNaM3y0YOFk4",
   "contents": [
     {

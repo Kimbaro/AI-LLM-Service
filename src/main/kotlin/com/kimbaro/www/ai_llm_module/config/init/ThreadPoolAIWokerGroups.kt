@@ -2,6 +2,7 @@ package com.kimbaro.www.ai_llm_module.config.init
 
 import com.kimbaro.www.ai_llm_module.domains.HELLORING_AI_TEXT
 import com.kimbaro.www.ai_llm_module.dto.GeminiThreadData
+import com.kimbaro.www.ai_llm_module.services.AIModelGroups
 import jakarta.annotation.PostConstruct
 import kotlinx.coroutines.*
 import lombok.extern.slf4j.Slf4j
@@ -12,10 +13,10 @@ import java.util.concurrent.*
 
 @Component
 @Slf4j
-class ThreadPoolGroups(private val applicationContext: ApplicationContext) {
+class ThreadPoolAIWokerGroups(private val applicationContext: ApplicationContext, private val aiModelGroups: AIModelGroups) {
 
     private val sessionQueue = ConcurrentLinkedQueue<GeminiThreadData>();
-    private val log = LoggerFactory.getLogger(ThreadPoolGroups::class.java)
+    private val log = LoggerFactory.getLogger(ThreadPoolAIWokerGroups::class.java)
     private val executorService: ThreadPoolExecutor = ThreadPoolExecutor(
         5,  // core pool size
         10, // maximum pool size
