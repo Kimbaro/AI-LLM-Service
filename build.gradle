@@ -25,6 +25,7 @@ dependencyManagement {
 }
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-reactor-netty") // Netty 기반의 서버
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
     implementation 'io.projectreactor.kotlin:reactor-kotlin-extensions'
@@ -47,6 +48,10 @@ dependencies {
     // If you are using a test framework with Lombok
     testCompileOnly("org.projectlombok:lombok:1.18.28")
     testAnnotationProcessor("org.projectlombok:lombok:1.18.28")
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.4.3")
+
 }
 
 kotlin {

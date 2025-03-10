@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini API Request</title>
+
+    <!-- Materialize CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="grey lighten-4">
+
+<div class="container">
+    <h1 class="center-align">Gemini API Request</h1>
+
+    <!-- Form to collect the input values -->
+    <form id="geminiForm" class="col s12">
+
+        <!-- Model and Key Section -->
+        <div class="section">
+            <h5>AI Model과 API 키</h5>
+            <!-- Model -->
+            <div class="input-field">
+                <input id="model" type="text" class="validate" value="gemini-2.0-flash" required>
+                <label for="model">Model</label>
+            </div>
+
+            <!-- Key -->
+            <div class="input-field">
+                <input id="key" type="text" class="validate" value="AIzaSyCeX0mF6xl2SZHreHDL84LBNaM3y0YOFk4" required>
+                <label for="key">Key</label>
+            </div>
+        </div>
+
+        <!-- Contents Section -->
+        <div class="section">
+            <h5>Contents</h5>
+            <!-- Purpose -->
+            <div class="input-field">
+                <input id="purpose" type="text" class="validate" value="greeting" required>
+                <label for="purpose">Purpose</label>
+            </div>
+
+            <!-- Category -->
+            <div class="input-field">
+                <input id="category" type="text" class="validate" value="automated_phone_message" required>
+                <label for="category">Category</label>
+            </div>
+
+            <!-- Business -->
+            <div class="input-field">
+                <input id="business" type="text" class="validate" value="캠핑장" required>
+                <label for="business">Business</label>
+            </div>
+
+            <!-- Type -->
+            <div class="input-field">
+                <input id="type" type="text" class="validate" value="greeting_message" required>
+                <label for="type">Type</label>
+            </div>
+
+            <!-- Feeling -->
+            <div class="input-field">
+                <input id="feeling" type="text" class="validate" value="energetic" required>
+                <label for="feeling">Feeling</label>
+            </div>
+
+            <!-- Target Audience -->
+            <div class="input-field">
+                <input id="target_audience" type="text" class="validate" value="general_customers" required>
+                <label for="target_audience">Target Audience</label>
+            </div>
+
+            <!-- Tone -->
+            <div class="input-field">
+                <input id="tone" type="text" class="validate" value="informative" required>
+                <label for="tone">Tone</label>
+            </div>
+
+            <!-- Language -->
+            <div class="input-field">
+                <input id="language" type="text" class="validate" value="한국어" required>
+                <label for="language">Language</label>
+            </div>
+
+            <!-- Business Status -->
+            <div class="input-field">
+                <input id="business_status" type="text" class="validate" value="open" required>
+                <label for="business_status">Business Status</label>
+            </div>
+
+            <!-- Monday to Friday -->
+            <div class="input-field">
+                <input id="monday_to_friday" type="text" class="validate" value="00:00-23:59" required>
+                <label for="monday_to_friday">Monday to Friday</label>
+            </div>
+
+            <!-- Weekends -->
+            <div class="input-field">
+                <input id="weekends" type="text" class="validate" value="Closed" required>
+                <label for="weekends">Weekends</label>
+            </div>
+
+            <!-- Holidays -->
+            <div class="input-field">
+                <input id="holidays" type="text" class="validate" value="09:00-02:00" required>
+                <label for="holidays">Holidays</label>
+            </div>
+        </div>
+
+        <!-- Generation Config Section -->
+        <div class="section">
+            <h5>Generation Config</h5>
+            <!-- Temperature -->
+            <div class="input-field">
+                <input id="temperature" type="number" class="validate" value="0.2" required>
+                <label for="temperature">Temperature</label>
+            </div>
+
+            <!-- Top K -->
+            <div class="input-field">
+                <input id="topK" type="number" class="validate" value="50" required>
+                <label for="topK">Top K</label>
+            </div>
+
+            <!-- Top P -->
+            <div class="input-field">
+                <input id="topP" type="number" class="validate" value="1" required>
+                <label for="topP">Top P</label>
+            </div>
+
+            <!-- Max Output Tokens -->
+            <div class="input-field">
+                <input id="maxOutputTokens" type="number" class="validate" value="3000" required>
+                <label for="maxOutputTokens">Max Output Tokens</label>
+            </div>
+
+            <!-- Response Mime Type -->
+            <div class="input-field">
+                <input id="responseMimeType" type="text" class="validate" value="text/plain" required>
+                <label for="responseMimeType">Response Mime Type</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn waves-effect waves-light">Submit</button>
+    </form>
+
+    <!-- Response Section -->
+    <div id="responseOutput" class="section" style="margin-top: 20px;">
+        <h5>Response</h5>
+        <pre id="responseContent"></pre>
+    </div>
+</div>
+
+<!-- Materialize JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    // jQuery script to handle the form submission
+    $("#geminiForm").submit(function(event) {
+        event.preventDefault(); // Prevent form from submitting the default way
+
+        // Gather form data into JSON
+        const requestData = {
+            model: $("#model").val(),
+            key: $("#key").val(),
+            contents: [{
+                parts: [
+                    { text: $("#purpose").val() },
+                    { text: $("#category").val() },
+                    { text: $("#business").val() },
+                    { text: $("#type").val() },
+                    { text: $("#feeling").val() },
+                    { text: $("#target_audience").val() },
+                    { text: $("#tone").val() },
+                    { text: $("#language").val() },
+                    { text: $("#business_status").val() },
+                    { text: $("#monday_to_friday").val() },
+                    { text: $("#weekends").val() },
+                    { text: $("#holidays").val() }
+                ]
+            }],
+            generationConfig: {
+                temperature: parseFloat($("#temperature").val()),
+                topK: parseInt($("#topK").val()),
+                topP: parseFloat($("#topP").val()),
+                maxOutputTokens: parseInt($("#maxOutputTokens").val()),
+                responseMimeType: $("#responseMimeType").val()
+            }
+        };
+
+        // Send POST request to the server
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/gemini/question',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function(response) {
+                // Display the response in the page
+                $("#responseContent").text(JSON.stringify(response, null, 2));
+            },
+            error: function(error) {
+                console.error("Error:", error);
+                $("#responseContent").text("Error occurred while fetching data.");
+            }
+        });
+    });
+</script>
+</body>
+</html>

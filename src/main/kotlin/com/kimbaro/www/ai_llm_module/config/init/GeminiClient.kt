@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody
 interface GeminiClient {
 
     @PostMapping("/v1beta/models/{model}:generateContent?key={key}")
+    @Headers("Content-Type: application/json;charset=UTF-8")
     fun generateContent(
         @PathVariable("model") model: String,
         @PathVariable("key") key: String,

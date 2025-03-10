@@ -6,13 +6,14 @@ import com.kimbaro.www.ai_llm_module.services.AIModelGroups
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Component
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @Component("HELLORING_AI_TEXT")
 class HELLORING_AI_TEXT(private val aiModelGroups: AIModelGroups) {
 
     private val log = LoggerFactory.getLogger(HELLORING_AI_TEXT::class.java)
 
-    fun execute(data: GeminiThreadData): ResponseEntity<String> {
+    fun execute(data: GeminiThreadData): ResponseEntity<Google_GeminiApiResponse> {
         log.info("SESSION-ID : ${data.session.id}")
         log.info("DATA-ID : ${data.data.model}")
         log.info("DATA-DATA : ${data.data.toString()}")
@@ -43,6 +44,6 @@ class HELLORING_AI_TEXT(private val aiModelGroups: AIModelGroups) {
         )
         log.info("RES : ${res.toString()}")
 
-        return ResponseEntity.ok("sesssionId : ${data.session.id}\n data : ${data.data.toString()}");
+        return ResponseEntity.ok(res);
     }
 }
