@@ -32,6 +32,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-logging")
 
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
     // Lombok dependency
     compileOnly("org.projectlombok:lombok:1.18.28")
     annotationProcessor("org.projectlombok:lombok:1.18.28")
